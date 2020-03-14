@@ -3,6 +3,7 @@ import { Badge, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem, NavLin
 import PropTypes from 'prop-types';
 
 import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
+import firebase from 'firebase';
 import logo from '../../assets/img/brand/logo.svg'
 import sygnet from '../../assets/img/brand/sygnet.svg'
 
@@ -13,6 +14,13 @@ const propTypes = {
 const defaultProps = {};
 
 class DefaultHeader extends Component {
+
+  signOut(e) {
+    e.preventDefault()
+    firebase.auth().signOut()
+    this.props.history.push('/dashboard')
+    
+  }
   render() {
 
     // eslint-disable-next-line
@@ -65,7 +73,9 @@ class DefaultHeader extends Component {
               <DropdownItem><i className="fa fa-file"></i> Projects<Badge color="primary">42</Badge></DropdownItem>
               <DropdownItem divider />
               <DropdownItem><i className="fa fa-shield"></i> Lock Account</DropdownItem>
-              <DropdownItem><i className="fa fa-lock"></i> Logout</DropdownItem>
+              <DropdownItem  onClick={e=>this.signOut(e)} ><i className="fa fa-lock"></i> Logout</DropdownItem>
+
+              {/* <DropdownItem onClick={() => firebase.auth().signOut()} ><i className="fa fa-lock"></i> Logout</DropdownItem> */}
             </DropdownMenu>
           </AppHeaderDropdown>
         </Nav>
