@@ -18,7 +18,7 @@ class DefaultHeader extends Component {
   signOut(e) {
     e.preventDefault()
     firebase.auth().signOut()
-    this.props.history.push('/dashboard')
+    window.location.reload()
     
   }
   render() {
