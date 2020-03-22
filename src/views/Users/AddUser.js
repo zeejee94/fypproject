@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Card, CardBody, CardHeader, Col, Row, FormGroup, Form, Input, FormText, Label, CardFooter, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addUser, editUser } from '../../actions/usersactions';
+import { addUser, editUser,currentUserRef} from '../../actions/usersactions';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 class AddUser extends Component {
     constructor(props) {
         super(props)
@@ -72,23 +74,23 @@ class AddUser extends Component {
                     <Col xs="12" md="6">
                         <Card>
                             <CardHeader>
-                                <strong>Add User</strong>
+                                <strong>User information</strong>
                             </CardHeader>
                             <CardBody>
                                 <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
 
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="name-input">Firstname</Label>
+                                            <Label htmlFor="name-input">First Name</Label>
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="firstname" value={this.state.firstname} onChange={this.handleChange} placeholder="Enter Firstname" autoComplete="name" />
-                                            <FormText className="help-block">Please enter your firstname</FormText>
+                                            <FormText className="help-block">Please enter yourfirstname</FormText>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="name-input">LastName</Label>
+                                            <Label htmlFor="name-input">Last Name</Label>
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="text" id="lastname" value={this.state.lastname} onChange={this.handleChange} placeholder="Enter Listname" autoComplete="name" />
@@ -166,6 +168,19 @@ class AddUser extends Component {
                         </Card>
                     </Col>
                 </Row>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnVisibilityChange
+                    draggable
+                    pauseOnHover
+                    />
+{/* Same as */}
+<ToastContainer />
             </div>
         )
     }

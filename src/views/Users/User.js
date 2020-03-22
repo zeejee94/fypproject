@@ -1,39 +1,69 @@
 import React, { Component } from 'react';
-import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getUsers, addUser,removeUser } from '../../actions/usersactions';
 
-import usersData from './UsersData'
+
+function UserRow(props) {
+  const user = props.user
+  const userLink = `#/users/${user.id}`
+  let deleteStyle = {
+    color: '#20a8d8',
+    cursor: 'pointer'
+  }
+  return (
+    <tr key={user.id.toString()}>
+      <th scope="row">{user.id}</th>
+      <td>{user.firstname} {user.lastname}</td>
+      <td>{user.email}</td>
+      <td>{user.phone}</td>
+      <td>{user.userrole}</td>
+      <td>
+        <a href={userLink}>
+          <i className="fa fa-edit fa-2x" aria-hidden="true"></i>
+        </a> &nbsp;
+        <i className="fa fa-remove fa-2x" aria-hidden="true" style={deleteStyle} onClick={props.onDelete} id={user.key}></i>
+      </td>
+    </tr>
+  )
+}
 
 class User extends Component {
 
+  componentDidMount() {
+    this.props.getUsers();
+  }
+  onDelete = (e) => {
+   // this.props.removeUser(e.target.id)
+  }
   render() {
-
-    const user = usersData.find( user => user.id.toString() === this.props.match.params.id)
-
-    const userDetails = user ? Object.entries(user) : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
-
     return (
       <div className="animated fadeIn">
         <Row>
-          <Col>
+          <Col md={12}>
             <Card>
               <CardHeader>
-                <strong><i className="icon-info pr-1"></i>User id: {this.props.match.params.id}</strong>
+                <i className="fa fa-align-justify"></i> Users <small className="text-muted">example</small>
               </CardHeader>
               <CardBody>
-                  <Table responsive striped hover>
-                    <tbody>
-                      {
-                        userDetails.map(([key, value]) => {
-                          return (
-                            <tr key={key}>
-                              <td>{`${key}:`}</td>
-                              <td><strong>{value}</strong></td>
-                            </tr>
-                          )
-                        })
-                      }
-                    </tbody>
-                  </Table>
+                <Table responsive hover>
+                  <thead>
+                    <tr>
+                      <th scope="col">id</th>
+                      <th scope="col">name</th>
+                      <th scope="col">email</th>
+                      <th scope="col">phone</th>
+                      <th scope="col">role</th>
+                      <th scope="col">actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.props.users.map((user, index) =>
+                      <UserRow key={index} user={user} onDelete={this.onDelete} />
+                    )}
+                  </tbody>
+                </Table>
               </CardBody>
             </Card>
           </Col>
@@ -42,5 +72,19 @@ class User extends Component {
     )
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    users: state.userReducer.users,
+    isLoading: state.userReducer.isLoading
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUsers: bindActionCreators(getUsers, dispatch),
+    addUser: bindActionCreators(addUser, dispatch),
+    removeUser:bindActionCreators(removeUser,dispatch)
+  }
+}
 
-export default User;
+export default connect(mapStateToProps, mapDispatchToProps)(User);
+

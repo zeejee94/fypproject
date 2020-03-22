@@ -1,6 +1,8 @@
 import { ISLOADING, GET_USERS_LIST } from '../constants/action-types';
 import { userRef, authRef } from '../firebase/init';
 import toastr from 'toastr';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export const isLoading = bool => ({
     type: ISLOADING,
     isLoading: bool
@@ -46,7 +48,14 @@ export const addUser = (user,password) => {
             .then((res) => {
                 user.id = res.user.uid;
                 userRef.push(user, (res) => {
-                    toastr.success('user added successfully');
+                    toast.success('User added!', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true
+                        });
                 });
             })
     }
@@ -57,8 +66,16 @@ export const editUser = (user) => {
         userRef
             .child(user.key)
             .update(user)
+            .then (toast.success('User added!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+                }))
             .catch(error => {
-                toastr.error(error.message);
+                toast.error(error.message);
             })
     }
 }

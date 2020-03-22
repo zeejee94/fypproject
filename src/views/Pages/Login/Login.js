@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, Progress } from 'reactstrap';
 import toastr from 'toastr';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { authRef, userRef } from '../../../firebase/init';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
@@ -48,7 +50,7 @@ class Login extends Component {
             userRef.orderByKey().off('child_added', null);
           }
           else {
-            toastr.error('you are not authorized');
+            toast.error('you are not authorized');
           }
           //console.log(snapshot.val());
         });
@@ -57,7 +59,7 @@ class Login extends Component {
         //
       })
       .catch((error) => {
-        toastr.error(error.message)
+        toast.error(error.message)
       });
   }
   handleChange = (e) => {
