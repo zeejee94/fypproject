@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Card, CardBody, CardHeader, Col, Row, FormGroup, Form, Input, FormText, Label, CardFooter, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addUser, editUser,currentUserRef} from '../../actions/usersactions';
+import { addUser, editUser} from '../../actions/usersactions';
+import { userRef, authRef} from '../../firebase/init';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 class AddUser extends Component {
@@ -26,7 +27,8 @@ class AddUser extends Component {
     }
     componentDidMount() {
         let users = this.props.users;
-        let finduser = users.find(p => p.id == this.props.match.params.id);
+        let Uid = authRef.currentUser.Uid;
+        let finduser = users.find(p => p.id == Uid);
         if(typeof finduser != 'undefined')
         {
             this.setState({

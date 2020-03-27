@@ -12,12 +12,37 @@ export const getUserList = users => ({
     type: GET_USERS_LIST,
     users
 });
-export const getUser= user => ({
+export const getUserDetail = user => ({
     type: GET_USER,
     user
 });
 
+let Uid = authRef.currentUser.uid;
 
+export const getUser = () => {
+    return (dispatch) => {
+        dispatch(isLoading(true));
+        let user = [];
+        userRef.equalTo(Uid).then((snapshot) => {
+            snapshot.forEach(function (childSnapshot) {
+                let values = childSnapshot.val();
+                let childData = {
+                    id: values.id,
+                    firstname: values.firstname,
+                    lastname: values.lastname,
+                    email: values.email,
+                    phone: values.phone,
+                    key:childSnapshot.key,
+                    userrole: values.userrole
+
+                };
+                user.push(childData);
+            });
+            dispatch(getUserDetail(user));
+        })
+
+    }
+}
 
 
 export const getUsers = () => {
@@ -44,6 +69,26 @@ export const getUsers = () => {
 
     }
 }
+
+export const addSelfUser = (user,password) => {
+    return (dispatch) => {
+        dispatch(isLoading(true));
+        authRef((res) => {
+                user.id = res.user.uid;
+                userRef.push(user, (res) => {
+                    toast.success('User added!', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true
+                        });
+                });
+            })
+    }
+}
+
 export const addUser = (user,password) => {
     return (dispatch) => {
         dispatch(isLoading(true));
