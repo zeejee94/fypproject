@@ -1,4 +1,4 @@
-import { ISLOADING, GET_USERS_LIST } from '../constants/action-types';
+import { ISLOADING, GET_USERS_LIST, GET_USER } from '../constants/action-types';
 import { userRef, authRef } from '../firebase/init';
 import toastr from 'toastr';
 import { toast } from 'react-toastify';
@@ -11,6 +11,10 @@ export const isLoading = bool => ({
 export const getUserList = users => ({
     type: GET_USERS_LIST,
     users
+});
+export const getUser= user => ({
+    type: GET_USER,
+    user
 });
 
 
@@ -66,7 +70,7 @@ export const editUser = (user) => {
         userRef
             .child(user.key)
             .update(user)
-            .then (toast.success('User added!', {
+            .then (toast.success('User Edited!', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,

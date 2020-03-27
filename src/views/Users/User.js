@@ -3,11 +3,13 @@ import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getUsers, addUser,removeUser } from '../../actions/usersactions';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function UserRow(props) {
   const user = props.user
-  const userLink = `#/users/${user.id}`
+  const userLink = `#/user/${user.id}`
   let deleteStyle = {
     color: '#20a8d8',
     cursor: 'pointer'
@@ -68,6 +70,19 @@ class User extends Component {
             </Card>
           </Col>
         </Row>
+        <ToastContainer
+                    position="top-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnVisibilityChange
+                    draggable
+                    pauseOnHover
+                    />
+{/* Same as */}
+<ToastContainer />
       </div>
     )
   }
