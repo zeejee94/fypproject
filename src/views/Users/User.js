@@ -26,7 +26,7 @@ function UserRow(props) {
         <a href={userLink}>
           <i className="fa fa-edit fa-2x" aria-hidden="true"></i>
         </a> &nbsp;
-        <i className="fa fa-remove fa-2x" aria-hidden="true" style={deleteStyle} onClick={props.onDelete} id={user.key}></i>
+        
       </td>
     </tr>
   )
