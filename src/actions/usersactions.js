@@ -13,10 +13,13 @@ export const getUserList = users => ({
     users
 });
 <<<<<<< HEAD
+<<<<<<< HEAD
 export const getUserDetail = user => ({
     type: GET_USER,
     user
 });
+=======
+>>>>>>> parent of 1811252... trying to do didmount
 =======
 >>>>>>> parent of 1811252... trying to do didmount
 
