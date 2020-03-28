@@ -184,7 +184,11 @@ const User = Loadable({
 const AddUser=Loadable({
   loader:()=>import('./views/Users/AddUser'),
   loading: Loading,
-})
+});
+const UserEdit=Loadable({
+  loader:()=>import('./views/Users/UserEdit'),
+  loading: Loading,
+});
 
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
@@ -232,6 +236,7 @@ const routes = [
   { path: '/users/add', exact: true, name: 'Add User', component: AddUser },
   { path: '/users/:id', exact: true, name: 'Edit User', component: AddUser },
   { path: '/user', exact: true,  name: 'User', component: User },
+  { path: '/user/:id', exact: true,  name: 'User self edit', component: UserEdit },
 ];
 
 export default routes;

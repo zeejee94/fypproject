@@ -12,12 +12,7 @@ firebase.initializeApp(config);
 const databaseRef = firebase.database().ref();
 export const userRef = databaseRef.child("users");
 export const authRef = firebase.auth();
-<<<<<<< HEAD
-=======
 export const currentUserRef = firebase.auth().currentUser;
-<<<<<<< HEAD
->>>>>>> parent of 1811252... trying to do didmount
-=======
->>>>>>> parent of 1811252... trying to do didmount
+
 
 //tesing is good

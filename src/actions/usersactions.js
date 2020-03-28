@@ -1,4 +1,4 @@
-import { ISLOADING, GET_USERS_LIST } from '../constants/action-types';
+import { ISLOADING, GET_USERS_LIST, GET_USER } from '../constants/action-types';
 import { userRef, authRef } from '../firebase/init';
 import toastr from 'toastr';
 import { toast } from 'react-toastify';
@@ -12,44 +12,12 @@ export const getUserList = users => ({
     type: GET_USERS_LIST,
     users
 });
-<<<<<<< HEAD
-<<<<<<< HEAD
-export const getUserDetail = user => ({
+export const getUser= user => ({
     type: GET_USER,
     user
 });
-=======
->>>>>>> parent of 1811252... trying to do didmount
-=======
->>>>>>> parent of 1811252... trying to do didmount
 
 
-let Uid = authRef.currentUser.uid;
-
-export const getUser = () => {
-    return (dispatch) => {
-        dispatch(isLoading(true));
-        let user = [];
-        userRef.equalTo(Uid).then((snapshot) => {
-            snapshot.forEach(function (childSnapshot) {
-                let values = childSnapshot.val();
-                let childData = {
-                    id: values.id,
-                    firstname: values.firstname,
-                    lastname: values.lastname,
-                    email: values.email,
-                    phone: values.phone,
-                    key:childSnapshot.key,
-                    userrole: values.userrole
-
-                };
-                user.push(childData);
-            });
-            dispatch(getUserDetail(user));
-        })
-
-    }
-}
 
 
 export const getUsers = () => {
@@ -76,26 +44,6 @@ export const getUsers = () => {
 
     }
 }
-
-export const addSelfUser = (user,password) => {
-    return (dispatch) => {
-        dispatch(isLoading(true));
-        authRef((res) => {
-                user.id = res.user.uid;
-                userRef.push(user, (res) => {
-                    toast.success('User added!', {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true
-                        });
-                });
-            })
-    }
-}
-
 export const addUser = (user,password) => {
     return (dispatch) => {
         dispatch(isLoading(true));
@@ -122,7 +70,7 @@ export const editUser = (user) => {
         userRef
             .child(user.key)
             .update(user)
-            .then (toast.success('User added!', {
+            .then (toast.success('User Edited!', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
