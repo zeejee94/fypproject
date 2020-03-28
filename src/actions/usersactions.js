@@ -12,10 +12,13 @@ export const getUserList = users => ({
     type: GET_USERS_LIST,
     users
 });
+<<<<<<< HEAD
 export const getUserDetail = user => ({
     type: GET_USER,
     user
 });
+=======
+>>>>>>> parent of 1811252... trying to do didmount
 
 
 let Uid = authRef.currentUser.uid;
