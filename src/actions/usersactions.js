@@ -12,7 +12,7 @@ export const getUserList = users => ({
     type: GET_USERS_LIST,
     users
 });
-export const getUser= user => ({
+export const getUserDetail = user => ({
     type: GET_USER,
     user
 });
