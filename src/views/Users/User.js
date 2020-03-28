@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getUsers, addUser,removeUser } from '../../actions/usersactions';
+import { getUser, addUser,removeUser } from '../../actions/usersactions';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -35,7 +35,7 @@ function UserRow(props) {
 class User extends Component {
 
   componentDidMount() {
-    this.props.getUsers();
+    this.props.getUser();
   }
   onDelete = (e) => {
    // this.props.removeUser(e.target.id)
@@ -62,7 +62,7 @@ class User extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.props.users.map((user, index) =>
+                    {this.props.user.map((user, index) =>
                       <UserRow key={index} user={user} onDelete={this.onDelete} />
                     )}
                   </tbody>
@@ -90,13 +90,13 @@ class User extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    users: state.userReducer.users,
+    user: state.userReducer.user,
     isLoading: state.userReducer.isLoading
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUsers: bindActionCreators(getUsers, dispatch),
+    getUser: bindActionCreators(getUser, dispatch),
     addUser: bindActionCreators(addUser, dispatch),
     removeUser:bindActionCreators(removeUser,dispatch)
   }

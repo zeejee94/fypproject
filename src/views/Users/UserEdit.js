@@ -28,9 +28,8 @@ class AddUser extends Component {
     }
     componentDidMount() {
 
-        let users = this.props.users;
-        let userUid = authRef.currentUser.uid;
-        let finduser = users.find(p => p.id == userUid);
+        let user = this.props.user;
+        let finduser = user.find(p => p.id == this.props.match.params.id);
         if(typeof finduser != 'undefined')
         {
             this.setState({
@@ -192,7 +191,7 @@ class AddUser extends Component {
 const mapStateToProps = (state) => {
     return {
         isLoading: state.userReducer.isLoading,
-        users: state.userReducer.users
+        user: state.userReducer.user
     }
 }
 const mapDispatchToProps = (dispatch) => {

@@ -21,7 +21,7 @@ export const getUserDetail = user => ({
 export const getUser = () => {
     return (dispatch) => {
         dispatch(isLoading(true));
-        let users = [];
+        let user = [];
         userRef.once("value").then((snapshot) => {
             snapshot.forEach(function (childSnapshot) {
                 let values = childSnapshot.val();
@@ -38,10 +38,10 @@ export const getUser = () => {
 
                 };
             
-                users.push(childData);
+                user.push(childData);
             }
             });
-            dispatch(getUserDetail(users));
+            dispatch(getUserDetail(user));
         })
 
     }
