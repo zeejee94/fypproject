@@ -18,15 +18,15 @@ export const getUserDetail = user => ({
 });
 
 
-
-
-export const getUsers = () => {
+export const getUser = () => {
     return (dispatch) => {
         dispatch(isLoading(true));
         let users = [];
         userRef.once("value").then((snapshot) => {
             snapshot.forEach(function (childSnapshot) {
                 let values = childSnapshot.val();
+                let userUid = authRef.currentUser.uid;
+                if (values.id == userUid){
                 let childData = {
                     id: values.id,
                     firstname: values.firstname,
@@ -37,7 +37,37 @@ export const getUsers = () => {
                     userrole: values.userrole
 
                 };
+            
                 users.push(childData);
+            }
+            });
+            dispatch(getUserDetail(users));
+        })
+
+    }
+}
+
+export const getUsers = () => {
+    return (dispatch) => {
+        dispatch(isLoading(true));
+        let users = [];
+        userRef.once("value").then((snapshot) => {
+            snapshot.forEach(function (childSnapshot) {
+                let values = childSnapshot.val();
+              
+                let childData = {
+                    id: values.id,
+                    firstname: values.firstname,
+                    lastname: values.lastname,
+                    email: values.email,
+                    phone: values.phone,
+                    key:childSnapshot.key,
+                    userrole: values.userrole
+
+                };
+            
+                users.push(childData);
+            
             });
             dispatch(getUserList(users));
         })
