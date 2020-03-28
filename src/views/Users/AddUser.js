@@ -74,7 +74,7 @@ class AddUser extends Component {
                     <Col xs="12" md="6">
                         <Card>
                             <CardHeader>
-                                <strong>User information!!!!</strong>
+                                <strong>User information</strong>
                             </CardHeader>
                             <CardBody>
                                 <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">

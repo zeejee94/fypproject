@@ -13,5 +13,4 @@ const databaseRef = firebase.database().ref();
 export const userRef = databaseRef.child("users");
 export const authRef = firebase.auth();
 
-
 //tesing is good
