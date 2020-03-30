@@ -151,9 +151,13 @@ class AddUser extends Component {
                                             <Label htmlFor="password-input">User Role</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" name="select" id="userrole" value={this.state.userrole} readOnly = {true}/>
-                                                
-                                           
+                                            <Input type="select" name="select" id="userrole" value={this.state.userrole} onChange={this.handleChange}>
+                                                <option value="0">Please select</option>
+                                                <option value="super_admin">Super Admin</option>
+                                                <option value="admin_support">Admin Support</option>
+                                                <option value="restaurant_admin">Restaurant Admin</option>
+                                                <option value="customer">Customer</option>
+                                            </Input>
                                             <FormText className="help-block">Please enter your phone</FormText>
                                         </Col>
                                     </FormGroup>
@@ -162,7 +166,7 @@ class AddUser extends Component {
                             <CardFooter>
                                 <Button type="submit" size="sm" color="primary" onClick={this.onSave}><i className="fa fa-dot-circle-o"></i> Submit</Button>
                                 &nbsp;
-                                <Button type="reset" size="sm" color="danger" onClick={this.props.history.goBack}><i className="fa fa-ban"></i> Back</Button>
+                                <Button type="reset" size="sm" color="danger" onClick={this.onCancel}><i className="fa fa-ban"></i> Reset</Button>
                             </CardFooter>
                         </Card>
                     </Col>
