@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { Card, CardBody, CardHeader, Col, Row, FormGroup, Form, Input, FormText, Label, CardFooter, Button } from 'reactstrap';
 import { Container } from 'reactstrap';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import {
   AppAside,
@@ -15,6 +18,7 @@ import {
   AppSidebarNav,
 } from '@coreui/react';
 // sidebar nav config
+import userNavigation from '../../_userNav';
 import navigation from '../../_nav';
 // routes config
 import routes from '../../routes';
@@ -22,12 +26,18 @@ import DefaultAside from './DefaultAside';
 import DefaultFooter from './DefaultFooter';
 import DefaultHeader from './DefaultHeader';
 import { authRef } from '../../firebase/init';
+import { getUser } from '../../actions/usersactions';
+import { NULL } from 'node-sass';
 class DefaultLayout extends Component {
 
-  constructor() {
-    super()
-  }
+  constructor(props) {
+    super(props)
+ 
+}
+
   componentDidMount() {
+    this.props.getUser();
+    
     let checkUser = authRef.currentUser;
     if (checkUser) {
 
@@ -38,6 +48,7 @@ class DefaultLayout extends Component {
   }
 
   render() {
+    
     return (
       <div className="app">
         <AppHeader fixed>
@@ -47,7 +58,11 @@ class DefaultLayout extends Component {
           <AppSidebar fixed display="lg">
             <AppSidebarHeader />
             <AppSidebarForm />
+            <div>
+          
+           </div>
             <AppSidebarNav navConfig={navigation} {...this.props} />
+           
             <AppSidebarFooter />
             <AppSidebarMinimizer />
           </AppSidebar>
@@ -74,8 +89,21 @@ class DefaultLayout extends Component {
           <DefaultFooter />
         </AppFooter>
       </div>
-    );
+    );}
+    
+  
+}
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.userReducer.user,
+    isLoading: state.userReducer.isLoading
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUser: bindActionCreators(getUser, dispatch)
   }
 }
 
-export default DefaultLayout;
+export default connect(mapStateToProps, mapDispatchToProps)(DefaultLayout);
