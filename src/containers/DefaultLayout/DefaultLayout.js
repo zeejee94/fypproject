@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { Card, CardBody, CardHeader, Col, Row, FormGroup, Form, Input, FormText, Label, CardFooter, Button } from 'reactstrap';
 import { Container } from 'reactstrap';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 
 import {
   AppAside,
@@ -18,26 +15,24 @@ import {
   AppSidebarNav,
 } from '@coreui/react';
 // sidebar nav config
-import userNavigation from '../../_userNav';
 import navigation from '../../_nav';
+import Usernavigation from '../../_userNav';
 // routes config
 import routes from '../../routes';
 import DefaultAside from './DefaultAside';
 import DefaultFooter from './DefaultFooter';
 import DefaultHeader from './DefaultHeader';
-import { authRef } from '../../firebase/init';
-import { getUser } from '../../actions/usersactions';
-import { NULL } from 'node-sass';
+import { userRef,authRef } from '../../firebase/init';
 class DefaultLayout extends Component {
 
-  constructor(props) {
-    super(props)
- 
-}
-
+  constructor() {
+    super()
+    this.state = {
+     admin:false
+    }
+  }
   componentDidMount() {
-    this.props.getUser();
-    
+  
     let checkUser = authRef.currentUser;
     if (checkUser) {
 
@@ -45,11 +40,22 @@ class DefaultLayout extends Component {
     else {
       this.props.history.push('/login');
      }
+
+     //let uid = authRef.currentUser.uid;
+     userRef.orderByChild('userrole').equalTo('admin').on("value", snapshot => {
+     
+      this.setState({
+        
+        admin: true
+      });
+     });
   }
 
   render() {
-    
-    return (
+    const {admin} = this.state;
+    if (admin == true)
+    {
+      return (
       <div className="app">
         <AppHeader fixed>
           <DefaultHeader />
@@ -58,11 +64,7 @@ class DefaultLayout extends Component {
           <AppSidebar fixed display="lg">
             <AppSidebarHeader />
             <AppSidebarForm />
-            <div>
-          
-           </div>
             <AppSidebarNav navConfig={navigation} {...this.props} />
-           
             <AppSidebarFooter />
             <AppSidebarMinimizer />
           </AppSidebar>
@@ -89,21 +91,51 @@ class DefaultLayout extends Component {
           <DefaultFooter />
         </AppFooter>
       </div>
-    );}
+    );
+
+    }
+    else
+    {
+      return (
+        <div className="app">
+          <AppHeader fixed>
+            <DefaultHeader />
+          </AppHeader>
+          <div className="app-body">
+            <AppSidebar fixed display="lg">
+              <AppSidebarHeader />
+              <AppSidebarForm />
+              <AppSidebarNav navConfig={Usernavigation} {...this.props} />
+              <AppSidebarFooter />
+              <AppSidebarMinimizer />
+            </AppSidebar>
+            <main className="main">
+              <AppBreadcrumb appRoutes={routes} />
+              <Container fluid>
+                <Switch>
+                  {routes.map((route, idx) => {
+                    return route.component ? (<Route key={idx} path={route.path} exact={route.exact} name={route.name} render={props => (
+                      <route.component {...props} />
+                    )} />)
+                      : (null);
+                  },
+                  )}
+                  <Redirect from="/" to="/dashboard" />
+                </Switch>
+              </Container>
+            </main>
+            <AppAside fixed>
+              <DefaultAside />
+            </AppAside>
+          </div>
+          <AppFooter>
+            <DefaultFooter />
+          </AppFooter>
+        </div>
+      );
+    }
     
-  
-}
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.userReducer.user,
-    isLoading: state.userReducer.isLoading
-  }
-}
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getUser: bindActionCreators(getUser, dispatch)
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DefaultLayout);
+export default DefaultLayout;
