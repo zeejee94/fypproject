@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
+import * as firebase from "firebase";
 
 import {
   AppAside,
@@ -34,21 +35,27 @@ class DefaultLayout extends Component {
   componentDidMount() {
   
     let checkUser = authRef.currentUser;
+    let  uid = "";
     if (checkUser) {
-
+       uid = authRef.currentUser.uid;
+       
+       userRef.orderByChild('id').equalTo(uid).on("value", snapshot => {
+        let key = Object.keys(snapshot.val());
+        let finduser = snapshot.val()[key[0]];
+        if (finduser.userrole == "admin"){this.setState({
+          
+          admin: true
+        });}
+    
+        
+       });
     }
     else {
       this.props.history.push('/login');
      }
 
-     //let uid = authRef.currentUser.uid;
-     userRef.orderByChild('userrole').equalTo('admin').on("value", snapshot => {
      
-      this.setState({
-        
-        admin: true
-      });
-     });
+    
   }
 
   render() {
