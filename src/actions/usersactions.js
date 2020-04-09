@@ -1,5 +1,5 @@
 import { ISLOADING, GET_USERS_LIST, GET_USER } from '../constants/action-types';
-import { userRef, authRef } from '../firebase/init';
+import { userRef, authRef,storage } from '../firebase/init';
 import toastr from 'toastr';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,7 +34,8 @@ export const getUser = () => {
                     email: values.email,
                     phone: values.phone,
                     key:childSnapshot.key,
-                    userrole: values.userrole
+                    userrole: values.userrole,
+                    picture:values.picture
 
                 };
             
@@ -63,6 +64,7 @@ export const getUsers = () => {
                     phone: values.phone,
                     key:childSnapshot.key,
                     userrole: values.userrole
+
 
                 };
             
@@ -95,11 +97,15 @@ export const addUser = (user,password) => {
     }
 }
 export const editUser = (user) => {
+   
     return (dispatch) => {
-        dispatch(isLoading(true));
-        userRef
+        dispatch(isLoading(true)); 
+        if(user.picture!=null){
+            storage.child(`users-profile/${new Date().getTime()}`).put(user.picture).then(function(snapshot) {
+            snapshot.ref.getDownloadURL().then(function(downloadURL) {
+            userRef
             .child(user.key)
-            .update(user)
+            .update({firstname:user.firstname, lastname: user.lastname, phone: user.phone, userrole:user.userrole, picture:downloadURL})
             .then (toast.success('User Edited!', {
                 position: "top-right",
                 autoClose: 5000,
@@ -108,9 +114,27 @@ export const editUser = (user) => {
                 pauseOnHover: true,
                 draggable: true
                 }))
+            })
+        })
             .catch(error => {
                 toast.error(error.message);
-            })
+            })}
+
+            else
+        {
+            userRef
+            .child(user.key)
+            .update({firstname:user.firstname, lastname: user.lastname, phone: user.phone, userrole:user.userrole})
+            .then (toast.success('User Edited!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+                }))
+        }
+            
     }
 }
 export const removeUser=(key)=>{

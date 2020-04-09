@@ -10,6 +10,11 @@ export default {
         },
       },
       {
+        name: 'Product Upload',
+        url: '/product/upload',
+        icon: 'icon-star',
+      },
+      {
         name: 'Pages',
         url: '/pages',
         icon: 'icon-star',
@@ -34,6 +39,7 @@ export default {
             url: '/500',
             icon: 'icon-star',
           },
+         
         ],
       },
     ],

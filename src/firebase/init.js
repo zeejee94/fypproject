@@ -1,5 +1,6 @@
 import * as firebase from "firebase";
 
+
 const config = {
   apiKey: "AIzaSyA7TrcWuwT_aA47eWV6CDusXgYfrEt5eUU",
   authDomain: "fpy-dev.firebaseapp.com",
@@ -13,6 +14,6 @@ const databaseRef = firebase.database().ref();
 export const userRef = databaseRef.child("users");
 export const authRef = firebase.auth();
 
-
+export const storage = firebase.storage().ref();
 
 //tesing is good

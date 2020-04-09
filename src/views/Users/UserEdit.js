@@ -6,6 +6,7 @@ import { userRef, authRef } from '../../firebase/init';
 import { addUser, editUser} from '../../actions/usersactions';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PreviewPicture from '../Components/previewPicture';
 
 class AddUser extends Component {
     constructor(props) {
@@ -22,14 +23,19 @@ class AddUser extends Component {
             phone: '',
             userrole: '',
             isedit: false,
-            key: 0
+            key: 0,
+            picture: null,
+            pictureUrl : null
 
         }
     }
     componentDidMount() {
 
         let user = this.props.user;
+       
         let finduser = user.find(p => p.id == this.props.match.params.id);
+
+        
         if(typeof finduser != 'undefined')
         {
             this.setState({
@@ -38,6 +44,8 @@ class AddUser extends Component {
                 phone: finduser.phone,
                 userrole: finduser.userrole,
                 key: finduser.key,
+               
+                pictureUrl: finduser.picture,
                 isedit: true
             })
         }
@@ -54,11 +62,14 @@ class AddUser extends Component {
             lastname: this.state.lastname,
             phone: this.state.phone,
             userrole: this.state.userrole,
+
+            picture: this.state.picture,
+            
         }
         if (this.state.isedit) {
             user.key = this.state.key;
             this.props.editUser(user);
-            this.props.history.push('/users');
+            this.props.history.push('/user');
         }
         else {
             user.email = this.state.email;
@@ -70,6 +81,20 @@ class AddUser extends Component {
     onCancel = (e) => {
         this.setState(this.setIntialData())
     }
+
+    displayPicture(event){
+        let reader = new FileReader();
+        let file = event.target.files[0];
+        reader.onloadend = () =>{
+            this.setState({
+                picture: file,
+                pictureUrl : reader.result
+            });
+        };
+        reader.readAsDataURL(file);
+
+    }
+
     render() {
         return (
             <div className="animated fadeIn">
@@ -77,7 +102,7 @@ class AddUser extends Component {
                     <Col xs="12" md="6">
                         <Card>
                             <CardHeader>
-                                <strong>User information!!!!</strong>
+                                <strong>User information</strong>
                             </CardHeader>
                             <CardBody>
                                 <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
@@ -113,30 +138,7 @@ class AddUser extends Component {
                                             <FormText className="help-block">Please enter your email</FormText>
                                         </Col>
                                     </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="password-input">Password</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            {this.state.isedit ? <Input type="password" id="password" disabled /> :
-                                                <Input type="password" id="password"
-                                                    value={this.state.password} onChange={this.handleChange}
-                                                    placeholder="Password" autoComplete="new-password" />}
-                                            <FormText className="help-block">Please enter a complex password</FormText>
-                                        </Col>
-                                    </FormGroup>
-                                    <FormGroup row>
-                                        <Col md="3">
-                                            <Label htmlFor="password-input">Re-Password</Label>
-                                        </Col>
-                                        <Col xs="12" md="9">
-                                            {this.state.isedit ? <Input type="password" id="cpassword" disabled /> :
-                                                <Input type="password" id="cpassword"
-                                                    value={this.state.cpassword} onChange={this.handleChange}
-                                                    placeholder="Password" autoComplete="new-password" />}
-                                            <FormText className="help-block">Please enter a complex password</FormText>
-                                        </Col>
-                                    </FormGroup>
+                                    
                                     <FormGroup row>
                                         <Col md="3">
                                             <Label htmlFor="password-input">Phone Number</Label>
@@ -156,7 +158,22 @@ class AddUser extends Component {
                                            
                                             <FormText className="help-block">Please enter your phone</FormText>
                                         </Col>
+                                       
                                     </FormGroup>
+
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="password-input">User Role</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="file" name="picture" id="picture" onChange={(event) =>{this.displayPicture(event)}}/>
+                                                
+                                            <PreviewPicture pictureUrl={this.state.pictureUrl}/>
+                                            <FormText className="help-block">Please enter your phone</FormText>
+                                        </Col>
+                                       
+                                    </FormGroup>
+
                                 </Form>
                             </CardBody>
                             <CardFooter>
