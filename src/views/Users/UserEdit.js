@@ -69,7 +69,8 @@ class AddUser extends Component {
         if (this.state.isedit) {
             user.key = this.state.key;
             this.props.editUser(user);
-            this.props.history.push('/user');
+           
+          
         }
         else {
             user.email = this.state.email;
@@ -163,13 +164,13 @@ class AddUser extends Component {
 
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="password-input">User Role</Label>
+                                            <Label htmlFor="password-input">User Picture</Label>
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="file" name="picture" id="picture" onChange={(event) =>{this.displayPicture(event)}}/>
                                                 
                                             <PreviewPicture pictureUrl={this.state.pictureUrl}/>
-                                            <FormText className="help-block">Please enter your phone</FormText>
+                                            <FormText className="help-block">Please upload your picture here.</FormText>
                                         </Col>
                                        
                                     </FormGroup>

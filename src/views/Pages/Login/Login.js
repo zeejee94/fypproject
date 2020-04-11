@@ -34,34 +34,34 @@ class Login extends Component {
   componentDidMount = () => {
     firebase.auth().onAuthStateChanged(user => {
       this.setState({ isSignedIn: !!user })
-      console.log("user", user)
+     
     })
   }
-  onLogin = () => {
-    authRef
-      .signInWithEmailAndPassword(this.state.username, this.state.password)
-      .then((user) => {
+  // onLogin = () => {
+  //   authRef
+  //     .signInWithEmailAndPassword(this.state.username, this.state.password)
+  //     .then((user) => {
 
-        userRef.orderByChild('id').equalTo(user.user.uid).on("value", snapshot => {
-          let key = Object.keys(snapshot.val());
-          let finduser = snapshot.val()[key[0]];
-          if (finduser.userrole == "super_admin" || finduser.userrole == "restaurant_admin") {
-            this.props.history.push('/dashboard');
-            userRef.orderByKey().off('child_added', null);
-          }
-          else {
-            toast.error('you are not authorized');
-          }
-          //console.log(snapshot.val());
-        });
+  //       userRef.orderByChild('id').equalTo(user.user.uid).on("value", snapshot => {
+  //         let key = Object.keys(snapshot.val());
+  //         let finduser = snapshot.val()[key[0]];
+  //         if (finduser.userrole == "super_admin" || finduser.userrole == "restaurant_admin") {
+  //           this.props.history.push('/dashboard');
+  //           userRef.orderByKey().off('child_added', null);
+  //         }
+  //         else {
+  //           toast.error('you are not authorized');
+  //         }
+  //         //console.log(snapshot.val());
+  //       });
 
 
-        //
-      })
-      .catch((error) => {
-        toast.error(error.message)
-      });
-  }
+  //       //
+  //     })
+  //     .catch((error) => {
+  //       toast.error(error.message)
+  //     });
+  // }
   handleChange = (e) => {
     const newState = this.state;
     newState[e.target.id] = e.target.value;

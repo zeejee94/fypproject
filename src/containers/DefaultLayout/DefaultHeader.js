@@ -6,7 +6,7 @@ import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler }
 import firebase from 'firebase';
 import logo from '../../assets/img/brand/logo.svg'
 import sygnet from '../../assets/img/brand/sygnet.svg'
-
+import { userRef,authRef } from '../../firebase/init';
 const propTypes = {
   children: PropTypes.node,
 };
@@ -16,12 +16,44 @@ const profileLink = `#/user/`
 
 class DefaultHeader extends Component {
 
-  signOut(e) {
-    e.preventDefault()
-    firebase.auth().signOut()
-    window.location.reload()
+  constructor() {
+    super()
+    this.state = {
+     picture:null
+    }
+  }
+  
+  componentDidMount() {
+  
+    let checkUser = authRef.currentUser;
+    let  uid = "";
+    if (checkUser) {
+       uid = authRef.currentUser.uid;
+       
+       userRef.orderByChild('id').equalTo(uid).on("value", snapshot => {
+        let key = Object.keys(snapshot.val());
+        let finduser = snapshot.val()[key[0]];
+        if (finduser.picture !=null ){this.setState({
+          
+          picture: finduser.picture
+        });}
+    
+        
+       });
+    
+    
+
+     
     
   }
+}
+
+signOut(e) {
+  e.preventDefault()
+  authRef.signOut()
+  window.location.reload()
+  
+}
   render() {
 
     // eslint-disable-next-line
@@ -59,7 +91,7 @@ class DefaultHeader extends Component {
           </NavItem> */}
           <AppHeaderDropdown direction="down">
             <DropdownToggle nav>
-              <img src={'assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
+              <img src={this.state.picture} className="img-avatar" alt="no picture" />
             </DropdownToggle>
             <DropdownMenu right style={{ right: 'auto' }}>
               <DropdownItem header tag="div" className="text-center"><strong>Account</strong></DropdownItem>
