@@ -27,63 +27,63 @@ setIntialData = () => {
 
     }
 }
-componentDidMount() {
+// componentDidMount() {
 
-    let user = this.props.user;
-    let finduser = user.find(p => p.id == this.props.match.params.id);
-    if(typeof finduser != 'undefined')
-    {
-        this.setState({
-            firstname: finduser.firstname,
-            lastname: finduser.lastname,
-            phone: finduser.phone,
-            userrole: finduser.userrole,
-            key: finduser.key,
-            isedit: true
-        })
-    }
+//     let user = this.props.user;
+//     let finduser = user.find(p => p.id == this.props.match.params.id);
+//     if(typeof finduser != 'undefined')
+//     {
+//         this.setState({
+//             firstname: finduser.firstname,
+//             lastname: finduser.lastname,
+//             phone: finduser.phone,
+//             userrole: finduser.userrole,
+//             key: finduser.key,
+//             isedit: true
+//         })
+//     }
 
-}
-handleChange = (e) => {
-    const newState = this.state;
-    newState[e.target.id] = e.target.value;
-    this.setState(newState);
-}
-onSave = (e) => {
-    let user = {
-        firstname: this.state.firstname,
-        lastname: this.state.lastname,
-        phone: this.state.phone,
-        userrole: this.state.userrole,
-    }
-    if (this.state.isedit) {
-        user.key = this.state.key;
-        this.props.editUser(user);
-        this.props.history.push('/users');
-    }
-    else {
-        user.email = this.state.email;
-        this.props.addUser(user,this.state.password);
-        this.onCancel();
-    }
+// }
+// handleChange = (e) => {
+//     const newState = this.state;
+//     newState[e.target.id] = e.target.value;
+//     this.setState(newState);
+// }
+// onSave = (e) => {
+//     let user = {
+//         firstname: this.state.firstname,
+//         lastname: this.state.lastname,
+//         phone: this.state.phone,
+//         userrole: this.state.userrole,
+//     }
+//     if (this.state.isedit) {
+//         user.key = this.state.key;
+//         this.props.editUser(user);
+//         this.props.history.push('/users');
+//     }
+//     else {
+//         user.email = this.state.email;
+//         this.props.addUser(user,this.state.password);
+//         this.onCancel();
+//     }
 
-}
-onCancel = (e) => {
-    this.setState(this.setIntialData())
-}
+// }
+// onCancel = (e) => {
+//     this.setState(this.setIntialData())
+// }
 
-displayPicture(event){
-  let reader = new FileReader();
-  let file = event.target.files[0];
-  reader.onload = () =>{
-      this.setState({
-          picture: file,
-          pictureUrl : reader.result
-      });
-  };
-  reader.readAsDataURL(file);
+// displayPicture(event){
+//   let reader = new FileReader();
+//   let file = event.target.files[0];
+//   reader.onload = () =>{
+//       this.setState({
+//           picture: file,
+//           pictureUrl : reader.result
+//       });
+//   };
+//   reader.readAsDataURL(file);
 
-}
+// }
 render() {
     return (
         <div className="animated fadeIn">
