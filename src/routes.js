@@ -193,6 +193,10 @@ const ProductUpload=Loadable({
   loader:()=>import('./views/Product/productUpload'),
   loading: Loading,
 });
+const VR=Loadable({
+  loader:()=>import('./views/VR/Vr'),
+  loading: Loading,
+});
 
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
@@ -242,6 +246,7 @@ const routes = [
   { path: '/user', exact: true,  name: 'User', component: User },
   { path: '/user/:id', exact: true,  name: 'User self edit', component: UserEdit },
   { path: '/product/upload', exact: true,  name: 'Upload product', component: ProductUpload },
+  { path: '/VR', exact: true,  name: 'VR', component: VR },
 ];
 
 export default routes;
