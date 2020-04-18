@@ -90,8 +90,8 @@ class User extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    user: state.userReducer.user,
-    isLoading: state.userReducer.isLoading
+    user: state.user.user,
+    isLoading: state.user.isLoading
   }
 }
 const mapDispatchToProps = (dispatch) => {
