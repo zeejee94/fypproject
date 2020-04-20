@@ -42,6 +42,7 @@ export const getUser = () => {
                 user.push(childData);
             }
             });
+            
             dispatch(getUserDetail(user));
         })
 

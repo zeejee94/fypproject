@@ -35,6 +35,7 @@ class Users extends Component {
 
   componentDidMount() {
     this.props.getUsers();
+   
   }
   onDelete = (e) => {
    // this.props.removeUser(e.target.id)
@@ -61,7 +62,9 @@ class Users extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.props.users.map((user, index) =>
+                   
+                    {
+                    this.props.users.map((user, index) =>
                       <UserRow key={index} user={user} onDelete={this.onDelete} />
                     )}
                   </tbody>

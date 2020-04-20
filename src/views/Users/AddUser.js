@@ -26,6 +26,7 @@ class AddUser extends Component {
     }
     componentDidMount() {
         let users = this.props.users;
+        console.log(users);
         let finduser = users.find(p => p.id == this.props.match.params.id);
         if(typeof finduser != 'undefined')
         {
