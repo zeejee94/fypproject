@@ -29,6 +29,15 @@ export default {
       icon: 'icon-user',
     },
     {
+      title: true,
+      name: 'Product',
+      wrapper: {            // optional wrapper object
+        element: '',        // required valid HTML5 element tag
+        attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
+      },
+      class: ''             // optional class names space delimited list for title item ex: "text-center"
+    },
+    {
       name: 'Product Upload',
       url: '/product/upload',
       icon: 'icon-star',
@@ -55,6 +64,11 @@ export default {
     {
       name: 'VR',
       url: '/VR',
+      icon: 'icon-star',
+    },
+    {
+      name: 'Currency',
+      url: '/Currency',
       icon: 'icon-star',
     },
     // {

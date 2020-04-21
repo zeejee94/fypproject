@@ -92,7 +92,13 @@ class BrochureUpload extends Component {
                                             <Label htmlFor="name-input">Company Name</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="company" value={this.state.company} onChange={this.handleChange} placeholder="Enter Company" autoComplete="company" />
+                                      
+                                            <Input type="select"  name="select" id="company" value={this.state.company} onChange={this.handleChange} placeholder="Enter Company" autoComplete="company" >
+                                            <option value="0">Please select</option>
+                                                <option value="admin">TESCO</option>
+                                            
+                                                <option value="user">ECONSAVE</option>
+                                                </Input>
                                             <FormText className="help-block">Please enter the company name</FormText>
                                         </Col>
                                     </FormGroup>

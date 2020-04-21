@@ -205,7 +205,10 @@ const BrochureDisplay=Loadable({
   loader:()=>import('./views/Brochure/brochureDisplay'),
   loading: Loading,
 });
-
+const Currency=Loadable({
+  loader:()=>import('./views/Currency/currency'),
+  loading: Loading,
+});
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
@@ -256,6 +259,7 @@ const routes = [
   { path: '/VR', exact: true,  name: 'VR', component: VR },
   { path: '/brochureUpload', exact: true,  name: 'Brochure Upload', component: BrochureUpload },
   { path: '/brochureDisplay', exact: true,  name: 'Brochure Display', component: BrochureDisplay },
+  { path: '/currency', exact: true,  name: 'Currency', component: Currency },
 ];
 
 export default routes;
