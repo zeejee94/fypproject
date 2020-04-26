@@ -4,3 +4,4 @@ export const ISLOADING="ISLOADING";
 export const ADD_USER="ADD_USER";
 export const UPDATE_FILTER = 'UPDATE_FILTER';
 export const GET_BROCHURES = "GET_BROCHURES"
+export const ADD_PRODUCTS = "ADD_PRODUCTS"

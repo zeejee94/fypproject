@@ -11,9 +11,10 @@ const config = {
   };
 firebase.initializeApp(config);
 export const databaseRef = firebase.database().ref();
-
+export const timeRef = firebase.database.ServerValue.TIMESTAMP;
 export const userRef = databaseRef.child("users");
 export const brochureRef = databaseRef.child("brochures");
+export const productRef = databaseRef.child("products");
 export const authRef = firebase.auth();
 
 export const storage = firebase.storage().ref();

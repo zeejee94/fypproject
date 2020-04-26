@@ -3,7 +3,7 @@ import { Card, CardBody, CardHeader, Col, Row, FormGroup, Form, Input, FormText,
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { userRef, authRef } from '../../firebase/init';
-import { addUser, editUser} from '../../actions/usersactions';
+import { addProduct} from '../../actions/productactions';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { classnames } from './helpers';
@@ -11,6 +11,13 @@ import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
   } from 'react-places-autocomplete';
+  import Select from 'react-select';
+
+  const options = [
+    {  label: 'Milo 10kg' },
+    {  label: 'Milo 2kg' },
+    {  label: 'Milo 5kg' },
+  ];
 
   
 class productUpload extends Component {
@@ -36,6 +43,9 @@ setIntialData = () => {
         latitude: null,
         longitude: null,
         isGeocoding: false,
+        name: null,
+        price:0,
+        retailer:null
     }
 }
 // componentDidMount() {
@@ -55,11 +65,30 @@ setIntialData = () => {
 //     }
 
 // }
-// handleChange = (e) => {
-//     const newState = this.state;
-//     newState[e.target.id] = e.target.value;
-//     this.setState(newState);
-// }
+handleChange = (e) => {
+    const newState = this.state;
+    newState[e.target.id] = e.target.value;
+    this.setState(newState);
+}
+selecthandleChange = name => {
+  this.setState({ name});
+
+};
+
+onSave = (e) => {
+  let product = {
+      name: this.state.name.label,
+      retailer:this.state.retailer,
+      address: this.state.address,
+      price: this.state.price,
+      
+  }
+ 
+
+      this.props.addProduct(product);
+   
+
+}
 // onSave = (e) => {
 //     let user = {
 //         firstname: this.state.firstname,
@@ -95,7 +124,7 @@ setIntialData = () => {
 //   reader.readAsDataURL(file);
 
 // }
-handleChange = address => {
+addresshandleChange = address => {
     this.setState({
       address,
       latitude: null,
@@ -143,8 +172,10 @@ render() {
         latitude,
         longitude,
         isGeocoding,
+        name
       } = this.state;
     return (
+      
         <div className="animated fadeIn">
          
      
@@ -152,59 +183,55 @@ render() {
                 <Col xs="12" md="6">
                     <Card>
                         <CardHeader>
-                            <strong>User information</strong>
+                            <strong>Product information</strong>
                         </CardHeader>
                         <CardBody>
                             <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
-
-                                <FormGroup row>
+                            <FormGroup row>
                                     <Col md="3">
-                                        <Label htmlFor="name-input">First Name</Label>
+                                        <Label htmlFor="name-input">Product Name</Label>
                                     </Col>
                                     <Col xs="12" md="9">
-                                        <Input type="text" id="firstname" value={this.state.firstname} onChange={this.handleChange} placeholder="Enter Firstname" autoComplete="name" />
-                                        <FormText className="help-block">Please enter yourfirstname</FormText>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup row>
-                                    <Col md="3">
-                                        <Label htmlFor="name-input">Last Name</Label>
-                                    </Col>
-                                    <Col xs="12" md="9">
-                                        <Input type="text" id="lastname" value={this.state.lastname} onChange={this.handleChange} placeholder="Enter Listname" autoComplete="name" />
-                                        <FormText className="help-block">Please enter your lastname</FormText>
-                                    </Col>
-                                </FormGroup>
-                                <FormGroup row>
-                                    <Col md="3">
-                                        <Label htmlFor="email-input">Email</Label>
-                                    </Col>
-                                    <Col xs="12" md="9">
-                                        {this.state.isedit ? <Input type="email" id="email"
-                                            value={this.state.email} disabled /> :
-                                            <Input type="email" id="email"
-                                                value={this.state.email} onChange={this.handleChange}
-                                                placeholder="Enter Email" autoComplete="email" />}
-                                        <FormText className="help-block">Please enter your email</FormText>
+                                    <Select
+                                        value={name}
+                                        onChange={this.selecthandleChange}
+                                        options={options}
+                                      />
+                                        <FormText className="help-block">Please enter product name</FormText>
                                     </Col>
                                 </FormGroup>
                                 
                                 <FormGroup row>
-                                    <Col md="3">
-                                        <Label htmlFor="password-input">Phone Number</Label>
-                                    </Col>
-                                    <Col xs="12" md="9">
-                                        <Input type="email" placeholder="Enter Phone" id="phone" value={this.state.phone} onChange={this.handleChange} autoComplete="phone" />
-                                        <FormText className="help-block">Please enter your phone</FormText>
-                                    </Col>
-                                </FormGroup>
+                                
+                                <Col md="3">
+                                    <Label htmlFor="name-input">Retailer</Label>
+                                </Col>
+                                <Col xs="12" md="9">
+                                
+                                    <Input type="text" id="retailer" value={this.state.retailer} onChange={this.handleChange} placeholder="Enter retailer" autoComplete="retailer" />
+                                    <FormText className="help-block">Please enter retailer</FormText>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                
+                                <Col md="3">
+                                    <Label htmlFor="name-input">Product price</Label>
+                                </Col>
+                                <Col xs="12" md="9">
+                                
+                                    <Input type="number" id="price" value={this.state.price} onChange={this.handleChange} placeholder="Enter price" autoComplete="price" />
+                                    <FormText className="help-block">Please enter product price</FormText>
+                                </Col>
+                            </FormGroup>
+                                
+                                
                                 <FormGroup row>
                                     <Col md="3">
-                                        <Label htmlFor="password-input">User Role</Label>
+                                        <Label htmlFor="name-input">Location</Label>
                                     </Col>
                                     <Col xs="12" md="9">
                                     <PlacesAutocomplete
-          onChange={this.handleChange}
+          onChange={this.addresshandleChange}
           value={address}
           onSelect={this.handleSelect}
           onError={this.handleError}
@@ -290,17 +317,7 @@ render() {
                                         <FormText className="help-block">Please enter your phone</FormText>
                                     </Col>
                                 </FormGroup>
-                                <FormGroup row>
-                                    <Col md="3">
-                                        <Label htmlFor="password-input">User Role</Label>
-                                    </Col>
-                                    <Col xs="12" md="9">
-                                        <Input type="file" name="select" id="userrole" value={this.state.userrole} readOnly = {true}/>
-                                            
-                                       
-                                        <FormText className="help-block">Please enter your phone</FormText>
-                                    </Col>
-                                </FormGroup>
+                            
                             </Form>
                         </CardBody>
                         <CardFooter>
@@ -329,4 +346,11 @@ render() {
 }
 }
 
-export default productUpload;
+const mapDispatchToProps = (dispatch) => {
+  return {
+      
+      addProduct: bindActionCreators(addProduct, dispatch)
+  }
+}
+
+export default connect(null, mapDispatchToProps)(productUpload);

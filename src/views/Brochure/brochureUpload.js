@@ -95,9 +95,9 @@ class BrochureUpload extends Component {
                                       
                                             <Input type="select"  name="select" id="company" value={this.state.company} onChange={this.handleChange} placeholder="Enter Company" autoComplete="company" >
                                             <option value="0">Please select</option>
-                                                <option value="admin">TESCO</option>
+                                                <option value="TESCO">TESCO</option>
                                             
-                                                <option value="user">ECONSAVE</option>
+                                                <option value="ECONSAVE">ECONSAVE</option>
                                                 </Input>
                                             <FormText className="help-block">Please enter the company name</FormText>
                                         </Col>
