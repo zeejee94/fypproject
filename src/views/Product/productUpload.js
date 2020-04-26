@@ -215,7 +215,7 @@ render() {
                             <FormGroup row>
                                 
                                 <Col md="3">
-                                    <Label htmlFor="name-input">Product price</Label>
+                                    <Label htmlFor="name-input">Product price(RM)</Label>
                                 </Col>
                                 <Col xs="12" md="9">
                                 
