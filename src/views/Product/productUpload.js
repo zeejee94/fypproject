@@ -12,12 +12,8 @@ import PlacesAutocomplete, {
     getLatLng,
   } from 'react-places-autocomplete';
   import Select from 'react-select';
-
-  const options = [
-    {  label: 'Milo 10kg' },
-    {  label: 'Milo 2kg' },
-    {  label: 'Milo 5kg' },
-  ];
+  import { options } from '../Product';
+ 
 
   
 class productUpload extends Component {
