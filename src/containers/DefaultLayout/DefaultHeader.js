@@ -72,9 +72,7 @@ signOut(e) {
           <NavItem className="px-3">
             <NavLink href="#/dashboard">Dashboard</NavLink>
           </NavItem>
-          <NavItem className="px-3">
-            <NavLink href="#/users">Users</NavLink>
-          </NavItem>
+        
          
         </Nav>
         <Nav className="ml-auto" navbar>
